@@ -1,0 +1,46 @@
+// Archivo de esquema de base de datos de Prisma
+
+// Define la estructura de las tablas y relaciones en la base de datos PostgreSQL
+
+// Ejemplo de definición de una tabla de inventario
+model Inventario {
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  cantidad  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Ejemplo de definición de una tabla de productos
+model Producto {
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  precio    Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Ejemplo de definición de una relación entre Inventario y Producto
+model InventarioProducto {
+  id          Int      @id @default(autoincrement())
+  inventario  Inventario @relation(fields: [inventarioId], references: [id])
+  inventarioId Int
+  producto    Producto   @relation(fields: [productoId], references: [id])
+  productoId  Int
+  cantidad    Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Más definiciones de modelos y relaciones aquí...
+
+// Configuración de la conexión a la base de datos PostgreSQL
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Generación de código de Prisma
+generator client {
+  provider = "prisma-client-js"
+}

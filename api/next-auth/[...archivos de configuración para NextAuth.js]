@@ -1,0 +1,49 @@
+// Este archivo contiene la configuración para NextAuth.js
+
+import NextAuth from 'next-auth';
+import Providers from 'next-auth/providers';
+
+const options = {
+  // Configuración de proveedores de autenticación
+  providers: [
+    Providers.Google({
+      clientId: 'TU_CLIENT_ID',
+      clientSecret: 'TU_CLIENT_SECRET',
+    }),
+    // Agrega otros proveedores de autenticación aquí
+  ],
+
+  // Configuración de la base de datos
+  database: {
+    type: 'postgres',
+    host: 'TU_HOST',
+    port: 'TU_PUERTO',
+    username: 'TU_USUARIO',
+    password: 'TU_CONTRASEÑA',
+    database: 'TU_BASE_DE_DATOS',
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  },
+
+  // Configuración de las sesiones
+  session: {
+    jwt: true,
+  },
+
+  // Configuración de las callbacks
+  callbacks: {
+    // Agrega tus callbacks personalizados aquí
+  },
+
+  // Configuración de las páginas
+  pages: {
+    signIn: '/auth/signin',
+    signOut: '/auth/signout',
+    error: '/auth/error',
+    verifyRequest: '/auth/verify-request',
+    newUser: null, // Si deseas redirigir a una página específica para nuevos usuarios
+  },
+};
+
+export default (req, res) => NextAuth(req, res, options);
